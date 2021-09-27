@@ -1,0 +1,6 @@
+﻿todo:
+
+* voir exposition du json via controller
+* voir reception des objetcs json via controller
+* websocket?
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0

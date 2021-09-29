@@ -46,7 +46,7 @@ Response Format - JSON <br>
 Response Object - [powerproduction](#powerproduction) <br>
 API Version - 1.0 <br>
 Resource URI - https://localhost:8888/productionplan <br>
-Parameters  - [payload](#payload) <br>
+Parameters  - JSON [payload](#payload) <br>
 
 
 Example Request

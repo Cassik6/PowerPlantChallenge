@@ -19,14 +19,34 @@ in the form of a list of
 
 # How
 
+## endpoints
+
+## retrieve production plan
+
+### Allowed HTTP Methods
+POST - Returns a list of power productions
+
+### Resource Information
+Authentication - None
+Response Format - JSON
+Response Object - [powerproduction](#powerproduction)
+API Version - 2.0
+Resource URI - https://api.cardmarket.com/ws/v2.0/games
+Parameters
+None.
+
+Example Request
+GET https://api.cardmarket.com/ws/v2.0/games
 
 
+/productionplan
 
 
+# Entities
 
 ## Return entity
 
-## powerproduction
+### powerproduction
 contains the name of the power plant and how much power it has to generate.
 
 | field name   |      type      |  
@@ -35,14 +55,54 @@ contains the name of the power plant and how much power it has to generate.
 |p |    float   |
 
 
-Power Production: {
-    "name": string,
-    "p": float
-    }
+### example
+
+```
+[
+  {
+    "name": "windpark1",
+    "p": 75
+  },
+  {
+    "name": "windpark2",
+    "p": 18
+  },
+  {
+    "name": "gasfiredbig1",
+    "p": 200
+  },
+  {
+    "name": "gasfiredbig1",
+    "p": 0
+  },
+  {
+    "name": "tj1",
+    "p": 0
+  },
+  {
+    "name": "tj2",
+    "p": 0
+  }
+]
+```
 
 
-### Input entity
+## Input entity
 
+###
+
+| field name   |      type      |  
+|----------|:-------------:|
+|name  |  string |
+|p |    float   |
+
+
+### 
+
+| field name   |      type      |  
+|----------|:-------------:|
+|name  |  string |
+|p |    float   |
 
 example
 ```{
@@ -98,4 +158,5 @@ example
       "pmax": 36
     }
   ]
-}```
+}
+```

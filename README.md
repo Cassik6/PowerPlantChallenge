@@ -26,7 +26,10 @@ Then we're going to iterate through each of them until we reach a sufficient amo
 Throught each iteration if :
 * the powerplant has a minimum power production higher than the global needed load, we'll just skip it
 * the powerplant has a minimum power production higher than the remaining needed load, if :
-  - it's the 
+  - we can lower enough production from an already used powerplants to fire up this one, we'll compare the scenario with this powerplant shut down and the other scenario with previous powerplants producing less.
+  - we can't lower other powerplant's production to fire this one up, we'll compare scenarios with and without previously used powerplants that were preventing this one to be fired up.
+
+Once we have compared each individual scenario, we'll chose the most efficient one and return it to client.
 
 ## build
 

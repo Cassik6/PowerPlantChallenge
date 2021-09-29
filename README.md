@@ -1,4 +1,4 @@
-[[_TOC_]]
+![](/src/img/thumbnail.jpg)
 
 # PowerPlantChallenge
 Engie Test Project 

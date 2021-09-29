@@ -46,8 +46,8 @@ GET https://api.cardmarket.com/ws/v2.0/games
 ### powerproduction
 contains the name of the power plant and how much power it has to generate.
 
-| field name   |      type      |  
-|----------|:-------------:|
+| field name   |      type      |  description|
+|----------|:-------------:|------:|
 |name  |  string |
 |p |    float   |
 
@@ -88,25 +88,33 @@ contains the name of the power plant and how much power it has to generate.
 
 ### payload
 
-| field name   |      type      |  
-|----------|:-------------:|
-|name  |  string |
-|p |    float   |
+| field name   |      type      |  description|
+|----------|:-------------:|------:|
+|load  |  float | need load for this cycle|
+|fuels |    [fuel](#fuel)   | list of fuel prices|
+|powerplants |    [powerplant](#powerplant)   | list of availlable powerplants|
 
 
-### fuels
+### fuel
 
-| field name   |      type      |  
-|----------|:-------------:|
-|name  |  string |
-|p |    float   |
+| field name   |      type      |  description|
+|----------|:-------------:|------:|
+|gas(euro/MWh)  |  float | gas price|
+|kerosine(euro/MWh) |    float   | kerosine price|
+|co2(euro/ton) |    float   | cost of CO2 emission |
+|wind(%) |    float   | wind intensity|
 
 ### powerplant
 
-| field name   |      type      |  
-|----------|:-------------:|
-|name  |  string |
-|p |    float   |
+| field name   |      type      |  description|
+|----------|:-------------:|------:|
+|name  |  string | name of the powerplant|
+|type |    string   |  type of power plant, can only be `turbojet`, `gasfired`or  `windturbine`|
+|efficiency |    float   | power production efficiency |
+|pmin |    float   | minimum amount of energy that has to be produced when the powerplant is turned on|
+|pmax |    float   | maximum amount of energy the powerplant can produce|
+
+
 
 example
 ```{

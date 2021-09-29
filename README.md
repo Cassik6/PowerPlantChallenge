@@ -18,6 +18,16 @@ in the form of a list containing the used powerplants and their energy productio
 
 # How
 
+## algorithm
+
+Our approach, while not optimal in term of CPU efficiency covers all the scenarios we tested.
+First we're going to sort powerplants by cost efficiency.
+Then we're going to iterate through each of them until we reach a sufficient amount of power units.
+Throught each iteration if :
+* the powerplant has a minimum power production higher than the global needed load, we'll just skip it
+* the powerplant has a minimum power production higher than the remaining needed load, if :
+  - it's the 
+
 ## build
 
 ## launch

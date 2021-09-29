@@ -12,21 +12,24 @@ Satellit Junior .NET Developper
 
 ## Challenge Engie:
 
-In the context of a challenge  designing a power production calculator. 
+In the context of a challenge  designing a power production calculator. <br>
 Exposing a Web API that receives a payload (containing a list of powerplant and energy prices) and returns the optimal power production,
-in the form of a list containing the used powerplants and their energy production.
+in the form of a list containing the used powerplants and their energy production.<br>
 
 # How
 
 ## algorithm
 
-Our approach, while not optimal in term of CPU efficiency covers all the scenarios we tested.
-First we're going to sort powerplants by cost efficiency.
-Then we're going to iterate through each of them until we reach a sufficient amount of power units.
-Throught each iteration if :
+Our approach, while not optimal in term of CPU efficiency covers all the scenarios we tested.<br>
+First we're going to sort powerplants by cost efficiency.<br>
+Then we're going to iterate through each of them until we reach a sufficient amount of power units.<br>
+Throught each iteration if :<br>
 * the powerplant has a minimum power production higher than the global needed load, we'll just skip it
 * the powerplant has a minimum power production higher than the remaining needed load, if :
-  - it's the 
+  - we can lower enough production from an already used powerplants to fire up this one, we'll compare the scenario with this powerplant shut down and the other scenario with previous powerplants producing less.
+  - we can't lower other powerplant's production to fire this one up, we'll compare scenarios with and without previously used powerplants that were preventing this one to be fired up.
+
+Once we have compared each individual scenario, we'll chose the most efficient one and return it to the client.
 
 ## build
 
@@ -43,11 +46,7 @@ Response Format - JSON <br>
 Response Object - [powerproduction](#powerproduction) <br>
 API Version - 1.0 <br>
 Resource URI - https://localhost:8888/productionplan <br>
-Parameters  - [payload](#payload) <br>
-
-
-Example Request
-GET https://api.cardmarket.com/ws/v2.0/games
+Parameters  - JSON [payload](#payload) <br>
 
 
 # Entities

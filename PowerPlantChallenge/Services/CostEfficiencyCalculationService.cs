@@ -21,12 +21,12 @@ namespace PowerPlantChallenge.Services
             var accumulatedPMin = 0.0;
             powerplants = powerplants.Where(pp => pp.EffectivePMax > 0).OrderBy(pp => pp.CostPerUnit).ToList();
 
-            // Foreach Powerplant (ordered by costefficienty)
+            
             for (int powerplantIndex = 0; powerplantIndex < powerplants.Count; powerplantIndex++)
             {
-
                 var powerplant = powerplants[powerplantIndex];
 
+                // if the powerplant minimum power production is higher than what is need, there's no need to consider her.
                 if (powerplant.PMin > neededLoad)
                     continue;
 
@@ -37,10 +37,6 @@ namespace PowerPlantChallenge.Services
                 // In Case we can't use a power plant because it has too high of a PMin
                 if (powerplant.PMin > remainingNeededLoad)
                 {
-
-                    // If it's the first one in the list, just skip it
-                    if (powerplantIndex == 0)
-                        continue;
 
                     if (accumulatedPMin + powerplant.PMin <= neededLoad)
                     {

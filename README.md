@@ -1,6 +1,6 @@
 # Engie: Powerplant Coding Challenge
 
-![](/src/img/thumbnail.jpg)
+![](/doc/img/thumbnail.jpg)
 
 # Who
 

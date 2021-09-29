@@ -19,13 +19,13 @@ namespace PowerPlantChallenge.Services
             List<PowerProduction> powerProductions = new();            
             var remainingNeededLoad = neededLoad;
             var accumulatedPMin = 0.0;
-            powerplants = powerplants.OrderBy(pp => pp.CostPerUnit).ToList();
+            powerplants = powerplants.Where(pp => pp.EffectivePMax > 0).OrderBy(pp => pp.CostPerUnit).ToList();
 
             // Foreach Powerplant (ordered by costefficienty)
             for (int i = 0; i < powerplants.Count; i++)
             {
 
-                if (powerplants[0].PMin > neededLoad)
+                if (powerplants[i].PMin > neededLoad)
                     continue;
 
                 // Get out of the loop is somehow the remaining needed load is 0 (safeguard)
@@ -40,9 +40,9 @@ namespace PowerPlantChallenge.Services
                     if (i == 0)
                         continue;
 
-                    if (accumulatedPMin + powerplants[0].PMin >= neededLoad)
+                    if (accumulatedPMin + powerplants[i].PMin <= neededLoad)
                     {
-                        var deltaPmin = neededLoad - accumulatedPMin;
+                        var deltaPmin =  powerplants[i].PMin - remainingNeededLoad;
                         return ComparePowerProductionsByLoweringPMax(powerplants, neededLoad, deltaPmin, i);
                     }
                     else
@@ -81,13 +81,6 @@ namespace PowerPlantChallenge.Services
 
        
 
-        public int calcFac(int number)
-        {
-            if (number == 1)
-                return 1;
-            return number * calcFac(number - 1);
-        }
-
         /// <summary>
         /// Takes a list of powerplants and a list of indexes, for each index in the list this function will 
         /// calculate the most efficient power production without the power plant at that index in the powerplants list.
@@ -99,22 +92,19 @@ namespace PowerPlantChallenge.Services
         /// <returns></returns>
         private List<PowerProduction> ComparePowerProductionsByRemovingPowerplants(List<Powerplant> powerplants, double neededLoad, List<int> indexesToAvoid)
         {
-            // list containing all potential candidates for most efficient line up
-            var results = new List<List<PowerProduction>>();
+            List<PowerProduction> result = null;
 
             foreach (var indexToAvoid in indexesToAvoid)
             {
-                //TODO : faire la comparaison ici!
-                // fills result with the result of each powerplant line up
                 var powerplantsWithoutCandidate = powerplants.Where((pow, index) => index != indexToAvoid).ToList();
                 var candidate = CalculatePowerProduction(powerplantsWithoutCandidate, neededLoad);
-                if (candidate != null)
-                    results.Add(candidate);
+                if (result != null && candidate != null)
+                    result = ComparePowerProductions(candidate, result);
+                else if (candidate != null)
+                    result = candidate;
             }
 
-            // TODO : unit test : list is null, total generated power if any list < neededLoad
-            // returns the candidate with the lowest overall cost of production
-            return results.OrderBy(list => list.Sum(powerProd => powerProd.PowerGenerated * powerProd.CostPerUnit)).First();
+            return result;
         }
         /// <summary>
         /// Given a list of powerplants and a specific candidate (at index in powerplants list) 
@@ -160,7 +150,7 @@ namespace PowerPlantChallenge.Services
             var powerProdsByDiminishingPMaxes = CalculatePowerProduction(updatedPowerplants, neededLoad);
             return ComparePowerProductions(powerProdsWithtoutCandidate, powerProdsByDiminishingPMaxes);
         }
-/// <summary>
+        /// <summary>
         /// compares 2 lists of powerproduction and returns the most cost efficient one
         /// </summary>
         /// <param name="powerProd1"></param>
@@ -168,6 +158,13 @@ namespace PowerPlantChallenge.Services
         /// <returns></returns>
         private List<PowerProduction> ComparePowerProductions(List<PowerProduction> powerProds1, List<PowerProduction> powerProds2)
         {
+            if (powerProds1 == null)
+                return powerProds2;
+            if (powerProds2 == null)
+                return powerProds1;
+            if (powerProds1 == null && powerProds2 == null)
+                return null;
+
             return powerProds1.Sum(powerProd => powerProd.PowerGenerated * powerProd.CostPerUnit)
                 < powerProds2.Sum(powerProd => powerProd.PowerGenerated * powerProd.CostPerUnit) ?
                 powerProds1 : powerProds2;

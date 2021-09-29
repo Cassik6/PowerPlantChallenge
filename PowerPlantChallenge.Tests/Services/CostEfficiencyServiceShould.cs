@@ -43,7 +43,7 @@ namespace PowerPlantChallenge.Tests.Services
                         Efficiency = 1,
                         Name = "WindPark",
                         PMax = 20,
-                        PMin = 0,
+                        PMin = 20,
                         Type = PowerplantType.Windturbine,
                         CostPerUnit = 0,
                         EffectivePMax = 20

@@ -27,19 +27,16 @@ in the form of a list of
 POST - Returns a list of power productions
 
 ### Resource Information
-Authentication - None
-Response Format - JSON
-Response Object - [powerproduction](#powerproduction)
-API Version - 2.0
-Resource URI - https://api.cardmarket.com/ws/v2.0/games
-Parameters
-None.
+Authentication - None <br>
+Response Format - JSON <br>
+Response Object - [powerproduction](#powerproduction) <br>
+API Version - 1.0 <br>
+Resource URI - https://localhost:8888/productionplan <br>
+Parameters  - [payload](#payload) <br>
+
 
 Example Request
 GET https://api.cardmarket.com/ws/v2.0/games
-
-
-/productionplan
 
 
 # Entities
@@ -89,7 +86,7 @@ contains the name of the power plant and how much power it has to generate.
 
 ## Input entity
 
-###
+### payload
 
 | field name   |      type      |  
 |----------|:-------------:|
@@ -97,7 +94,14 @@ contains the name of the power plant and how much power it has to generate.
 |p |    float   |
 
 
-### 
+### fuels
+
+| field name   |      type      |  
+|----------|:-------------:|
+|name  |  string |
+|p |    float   |
+
+### powerplant
 
 | field name   |      type      |  
 |----------|:-------------:|

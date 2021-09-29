@@ -22,7 +22,7 @@ in the form of a list containing the used powerplants and their energy productio
 
 Our approach, while not optimal in term of CPU efficiency covers all the scenarios we tested.<br>
 First we're going to sort powerplants by cost efficiency.<br>
-Then we're going to iterate through each of them until<br> we reach a sufficient amount of power units.<br>
+Then we're going to iterate through each of them until we reach a sufficient amount of power units.<br>
 Throught each iteration if :<br>
 * the powerplant has a minimum power production higher than the global needed load, we'll just skip it
 * the powerplant has a minimum power production higher than the remaining needed load, if :

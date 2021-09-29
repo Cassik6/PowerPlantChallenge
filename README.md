@@ -49,10 +49,6 @@ Resource URI - https://localhost:8888/productionplan <br>
 Parameters  - JSON [payload](#payload) <br>
 
 
-Example Request
-GET https://api.cardmarket.com/ws/v2.0/games
-
-
 # Entities
 
 ## Return entity

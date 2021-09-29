@@ -30,14 +30,14 @@ namespace PowerPlantChallenge.Services
                 if (powerplant.PMin > neededLoad)
                     continue;
 
-                // Get out of the loop is somehow the remaining needed load is 0 (safeguard)
+                
                 if (remainingNeededLoad <= 0)
                     return powerProductions;
 
-                // In Case we can't use a power plant because it has too high of a PMin
+                // In Case we can't use a power plant because of it's minimum power production being too high
                 if (powerplant.PMin > remainingNeededLoad)
                 {
-
+                    // if the 
                     if (accumulatedPMin + powerplant.PMin <= neededLoad)
                     {
                         var deltaPmin =  powerplant.PMin - remainingNeededLoad;

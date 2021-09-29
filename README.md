@@ -1,7 +1,6 @@
-![](/src/img/thumbnail.jpg)
+# Engie: Powerplant Coding Challenge
 
-# PowerPlantChallenge
-Engie Test Project 
+![](/src/img/thumbnail.jpg)
 
 # Who
 

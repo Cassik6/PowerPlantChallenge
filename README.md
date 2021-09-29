@@ -1,7 +1,7 @@
+[[_TOC_]]
+
 # PowerPlantChallenge
 Engie Test Project 
-
-
 
 # Who
 
@@ -15,13 +15,15 @@ Satellit Junior .NET Developper
 
 In the context of a challenge  designing a power production calculator. 
 Exposing a Web API that receives a payload (containing a list of powerplant and energy prices) and returns the optimal power production,
-in the form of a list of 
+in the form of a list containing the used powerplants and their energy production.
 
 # How
 
-## endpoints
+## build
 
-## retrieve production plan
+## launch
+
+## endpoint: retrieve production plan
 
 ### Allowed HTTP Methods
 POST - Returns a list of power productions

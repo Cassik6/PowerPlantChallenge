@@ -11,14 +11,9 @@ namespace PowerPlantChallenge.Models
     public class Payload
     {
         
-        [JsonPropertyName("load")]
         public double NeededLoad { get; set; }
-        [JsonPropertyName("fuels")]
         public FuelPrices FuelPrices { get; set; }
-
-        [JsonPropertyName("powerplants")]
         public List<Powerplant> Powerplants { get; set; }
-
 
         public void UpdatePowerplantsData()
         {

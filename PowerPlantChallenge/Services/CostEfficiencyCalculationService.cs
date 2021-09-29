@@ -16,7 +16,7 @@ namespace PowerPlantChallenge.Services
         public List<PowerProduction> CalculatePowerProduction(List<Powerplant> powerplants, double neededLoad)
         {
 
-            List<PowerProduction> powerProductions = new();
+            List<PowerProduction> powerProductions = new();            
             var remainingNeededLoad = neededLoad;
             var accumulatedPMin = 0.0;
             powerplants = powerplants.OrderBy(pp => pp.CostPerUnit).ToList();
@@ -24,23 +24,25 @@ namespace PowerPlantChallenge.Services
             // Foreach Powerplant (ordered by costefficienty)
             for (int i = 0; i < powerplants.Count; i++)
             {
-                // Stack Pmins to identify scenarios where we shouldn't use Pmax of certain Powerplants
-                accumulatedPMin += powerplants[i].PMin;
+
+                if (powerplants[0].PMin > neededLoad)
+                    continue;
 
                 // Get out of the loop is somehow the remaining needed load is 0 (safeguard)
                 if (remainingNeededLoad <= 0)
-                    break;
+                    return powerProductions;
 
                 // In Case we can't use a power plant because it has too high of a PMin
                 if (powerplants[i].PMin > remainingNeededLoad)
                 {
+
                     // If it's the first one in the list, just skip it
                     if (i == 0)
                         continue;
 
-                    if (accumulatedPMin >= neededLoad)
+                    if (accumulatedPMin + powerplants[0].PMin >= neededLoad)
                     {
-                        var deltaPmin = neededLoad - accumulatedPMin + powerplants[i].PMin;
+                        var deltaPmin = neededLoad - accumulatedPMin;
                         return ComparePowerProductionsByLoweringPMax(powerplants, neededLoad, deltaPmin, i);
                     }
                     else
@@ -54,27 +56,36 @@ namespace PowerPlantChallenge.Services
                         // Compare which scenario with 
                         return ComparePowerProductionsByRemovingPowerplants(powerplants, neededLoad, indexesToAvoid);
                     }
-
-
-
                 }
 
-                if (powerplants[i].EffectivePMax > remainingNeededLoad)
+                else if (powerplants[i].EffectivePMax > remainingNeededLoad)
                 {
                     powerProductions.Add(new PowerProduction(powerplants[i].Name, remainingNeededLoad, powerplants[i].CostPerUnit));
+                    
+                    accumulatedPMin += powerplants[i].PMin;
                     remainingNeededLoad = 0;
                 }
 
                 else
                 {
                     powerProductions.Add(new PowerProduction(powerplants[i].Name, powerplants[i].EffectivePMax, powerplants[i].CostPerUnit));
+
+                    accumulatedPMin += powerplants[i].PMin;
                     remainingNeededLoad -= powerplants[i].EffectivePMax;
                 }
             }
 
-            if (remainingNeededLoad > 0)
-                return null;
-            return powerProductions;
+            return remainingNeededLoad > 0 ? null : powerProductions;
+            
+        }
+
+       
+
+        public int calcFac(int number)
+        {
+            if (number == 1)
+                return 1;
+            return number * calcFac(number - 1);
         }
 
         /// <summary>
@@ -116,13 +127,22 @@ namespace PowerPlantChallenge.Services
         /// <returns>List of the most efficient powerproductions between a scenario without the candidate and Pmax reduction from most efficient powerplants</returns>
         private List<PowerProduction> ComparePowerProductionsByLoweringPMax(List<Powerplant> powerplants, double neededLoad, double delta, int index)
         {
-            // TODO : This is probably dum (want to deep copy) needs reboxing
-            var updatedPowerplants = powerplants.Select(x => x).ToList();
+            
+            var updatedPowerplants = powerplants.Select(x => new Powerplant
+            {
+               CostPerUnit = x.CostPerUnit,
+               EffectivePMax = x.EffectivePMax,
+               Efficiency = x.Efficiency,
+               Name = x.Name,
+               PMax = x.PMax,
+               PMin = x.PMin,
+               Type = x.Type
+            }).ToList();
 
             var remainingUnitsToSubstract = delta;
            
             // foreach element in the list starting at the index of the candidate and going upwards from there.
-            for (int i = index -1; i >= 0; i--)
+            for (int  i = index -1; i >= 0; i--)
             {
                 var unitsToSubstract = Math.Min(updatedPowerplants[i].EffectivePMax - updatedPowerplants[i].PMin, remainingUnitsToSubstract);
 
@@ -140,8 +160,7 @@ namespace PowerPlantChallenge.Services
             var powerProdsByDiminishingPMaxes = CalculatePowerProduction(updatedPowerplants, neededLoad);
             return ComparePowerProductions(powerProdsWithtoutCandidate, powerProdsByDiminishingPMaxes);
         }
-
-        /// <summary>
+/// <summary>
         /// compares 2 lists of powerproduction and returns the most cost efficient one
         /// </summary>
         /// <param name="powerProd1"></param>

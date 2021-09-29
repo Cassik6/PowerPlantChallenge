@@ -10,10 +10,6 @@ namespace PowerPlantChallenge.Tests.Models
 {
     public class PowerplantShould
     {
-        [Theory]
-        public void CreateEnitity()
-        {
-            var powerplant = Powerplant.Create()
-        }
+        
     }
 }

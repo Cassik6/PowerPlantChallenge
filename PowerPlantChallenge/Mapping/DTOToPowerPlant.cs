@@ -17,7 +17,7 @@ namespace PowerPlantChallenge.Mapping
                 Name = dto.Name,
                 PMax = dto.PMax,
                 PMin = dto.PMin,
-                Type = (PowerplantType) Enum.Parse(typeof(PowerplantType), dto.Type)
+                Type = (PowerplantType) Enum.Parse(typeof(PowerplantType), dto.Type, true)
             };
         }
     }

@@ -37,6 +37,9 @@ namespace PowerPlantChallenge.Models
                 EffectivePMax = CalculateEffectivePMax(fuelPrice.Wind, pMax, type)
             };
 
+            if (powerplant.Type == PowerplantType.Windturbine) 
+                powerplant.PMin = powerplant.EffectivePMax;
+
             powerplant.CostPerUnit = type switch
             {
                 PowerplantType.Gasfired => CalculatePowerCostGasFired(fuelPrice, efficiency),

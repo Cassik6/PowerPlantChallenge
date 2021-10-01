@@ -38,6 +38,10 @@ To build and launch the application on a regular server, open a CLI and from the
 `dotnet run -p .\PowerPlantChallenge\`
 ### Docker
 
+To run the API on a docker container in the root folder, open a CLI and type: <br>
+`docker build -f .\PowerPlantChallenge\Dockerfile -t dockerimage`
+then type
+`docker container run -d --name dockercontainer -p 8888:80 dockerimage`
 
 ## Endpoint: retrieve production plan
 

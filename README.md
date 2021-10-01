@@ -15,27 +15,35 @@ Satellit Junior .NET Developper
 In the context of a challenge  designing a power production calculator. <br>
 Exposing a Web API that receives a payload (containing a list of powerplant and energy prices) and returns the optimal power production,
 in the form of a list containing the used powerplants and their energy production.<br>
+[Original Instructions](https://github.com/gem-spaas/powerplant-coding-challenge)
 
 # How
 
-## algorithm
+## Algorithm
 
-Our approach, while not optimal in term of CPU efficiency covers all the scenarios we tested.<br>
+Our approach, while not optimal in term of CPU efficiency covers all the scenarios we tested and computes less branches than a brute approach.<br>
 First we're going to sort powerplants by cost efficiency.<br>
-Then we're going to iterate through each of them until we reach a sufficient amount of power units.<br>
+Then we're going to iterate through each of them, stacking up power units until we reach the needed load.<br>
 Throught each iteration if :<br>
 * the powerplant has a minimum power production higher than the global needed load, we'll just skip it
-* the powerplant has a minimum power production higher than the remaining needed load, if :
-  - we can lower enough production from an already used powerplants to fire up this one, we'll compare the scenario with this powerplant shut down and the other scenario with previous powerplants producing less.
+* to be turned on, the powerplant requires a minimum power production higher than the remaining needed load, then if :
+  - we can lower enough production from an already used powerplants, we'll compare a scenario without this powerplant with scenario with previously used powerplants producing less.
   - we can't lower other powerplant's production to fire this one up, we'll compare scenarios with and without previously used powerplants that were preventing this one to be fired up.
 
 Once we have compared each individual scenario, we'll chose the most efficient one and return it to the client.
 
-## build
+## Build & Launch
+### server
+To build and launch the application on a regular server, open a CLI and from the root folder type: <br>
+`dotnet run -p .\PowerPlantChallenge\`
+### Docker
 
-## launch
+To run the API on a docker container in the root folder, open a CLI and type: <br>
+`docker build -f .\PowerPlantChallenge\Dockerfile -t dockerimage .` <br>
+then type <br>
+`docker container run -d --name dockercontainer -p 8888:80 dockerimage`<br>
 
-## endpoint: retrieve production plan
+## Endpoint: retrieve production plan
 
 ### Allowed HTTP Methods
 POST - Returns a list of power productions
@@ -58,8 +66,8 @@ contains the name of the power plant and how much power it has to generate.
 
 | field name   |      type      |  description|
 |----------|:-------------:|------:|
-|name  |  string |
-|p |    float   |
+|name  |  string | name of the powerplant|
+|p |    float   | amount of power genererated|
 
 
 ### example

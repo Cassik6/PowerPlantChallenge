@@ -32,9 +32,12 @@ Throught each iteration if :<br>
 
 Once we have compared each individual scenario, we'll chose the most efficient one and return it to the client.
 
-## build
+## build & launch
+### server
+To build and launch the application on a regular server, open a CLI and from the root folder type:
+´dotnet run -p .\PowerPlantChallenge\´
+### Docker
 
-## launch
 
 ## endpoint: retrieve production plan
 

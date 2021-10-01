@@ -34,7 +34,7 @@ Once we have compared each individual scenario, we'll chose the most efficient o
 
 ## build & launch
 ### server
-To build and launch the application on a regular server, open a CLI and from the root folder type:
+To build and launch the application on a regular server, open a CLI and from the root folder type: <br>
 `dotnet run -p .\PowerPlantChallenge\`
 ### Docker
 

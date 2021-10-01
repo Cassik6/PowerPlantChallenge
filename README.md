@@ -58,8 +58,8 @@ contains the name of the power plant and how much power it has to generate.
 
 | field name   |      type      |  description|
 |----------|:-------------:|------:|
-|name  |  string |
-|p |    float   |
+|name  |  string | name of the powerplant|
+|p |    float   | amount of power genererated|
 
 
 ### example

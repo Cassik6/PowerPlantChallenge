@@ -19,7 +19,7 @@ in the form of a list containing the used powerplants and their energy productio
 
 # How
 
-## algorithm
+## Algorithm
 
 Our approach, while not optimal in term of CPU efficiency covers all the scenarios we tested.<br>
 First we're going to sort powerplants by cost efficiency.<br>
@@ -32,14 +32,14 @@ Throught each iteration if :<br>
 
 Once we have compared each individual scenario, we'll chose the most efficient one and return it to the client.
 
-## build & launch
+## Build & Launch
 ### server
 To build and launch the application on a regular server, open a CLI and from the root folder type: <br>
 `dotnet run -p .\PowerPlantChallenge\`
 ### Docker
 
 
-## endpoint: retrieve production plan
+## Endpoint: retrieve production plan
 
 ### Allowed HTTP Methods
 POST - Returns a list of power productions

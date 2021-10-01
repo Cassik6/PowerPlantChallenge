@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlantChallenge.Models.DTOs
 {
-    public class PowerplantDTO : AbstractValidator<PowerplantDTO>
+    public class PowerplantDTO 
     {
         
         public string Name { get; set; }        
@@ -14,11 +14,5 @@ namespace PowerPlantChallenge.Models.DTOs
         public double Efficiency { get; set; }
         public double PMax { get; set; }
         public double PMin { get; set; }
-
-        public PowerplantDTO()
-        {
-            RuleFor(pow => pow.Type).IsEnumName(typeof(PowerplantType), caseSensitive: false);
-        }
-        
     }
 }

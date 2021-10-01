@@ -36,6 +36,8 @@ namespace PowerPlantChallenge
             {
                 var enumConverter = new JsonStringEnumConverter();
                 opts.JsonSerializerOptions.Converters.Add(enumConverter);
+                opts.JsonSerializerOptions.PropertyNamingPolicy = null;
+                
             })
                 .AddFluentValidation(s =>
                 {

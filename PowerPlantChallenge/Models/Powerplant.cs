@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -7,22 +8,12 @@ namespace PowerPlantChallenge.Models
 
     public class Powerplant
     {
-        // TODO : double decimal??
-        [JsonPropertyName( "name")]
         public string Name { get; set; }
-        [JsonPropertyName( "type")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PowerplantType Type { get; set; }
-
-        [JsonPropertyName( "efficiency")]
         public double Efficiency { get; set; }
-        [JsonPropertyName( "pmax")]
         public double PMax { get; set; }
-        [IgnoreDataMember]
         public double EffectivePMax { get; set; }
-        [JsonPropertyName( "pmin")]
         public double PMin { get; set; }
-        [IgnoreDataMember]
         public double CostPerUnit { get; set; }
 
         public static Powerplant Create(FuelPrices fuelPrice, string name, PowerplantType type, double efficiency, double pMax, double pMin)
@@ -52,7 +43,7 @@ namespace PowerPlantChallenge.Models
 
         private static double CalculateEffectivePMax(double windStrenght, double pMax, PowerplantType type)
         {
-            return type == PowerplantType.Windturbine ? windStrenght * pMax / 100 : pMax;
+            return Math.Round(type == PowerplantType.Windturbine ? windStrenght * pMax / 100 : pMax, 1);
         }
 
         private static double CalculatePowerCostGasFired(FuelPrices fuelPrice, double efficiency)

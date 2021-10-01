@@ -15,7 +15,7 @@ Satellit Junior .NET Developper
 In the context of a challenge  designing a power production calculator. <br>
 Exposing a Web API that receives a payload (containing a list of powerplant and energy prices) and returns the optimal power production,
 in the form of a list containing the used powerplants and their energy production.<br>
-[Original Statment](#https://github.com/gem-spaas/powerplant-coding-challenge)
+[Original Statment](https://github.com/gem-spaas/powerplant-coding-challenge)
 
 # How
 

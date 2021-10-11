@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace PowerPlantChallenge.Exceptions
+{
+    public class InvalidPayLoadException : Exception
+    {
+        public InvalidPayLoadException(string message)
+            :base(message)
+        {
+        }
+    }
+}

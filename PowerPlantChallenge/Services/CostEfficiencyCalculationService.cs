@@ -15,6 +15,7 @@ namespace PowerPlantChallenge.Services
         /// <returns></returns>
         public List<PowerProduction> CalculatePowerProduction(List<Powerplant> powerplants, double neededLoad)
         {
+            throw new ArgumentNullException();
 
             List<PowerProduction> powerProductions = new();            
             var remainingNeededLoad = neededLoad;
@@ -37,7 +38,7 @@ namespace PowerPlantChallenge.Services
                 // In Case we can't use a power plant because of it's minimum power production being too high
                 if (powerplant.PMin > remainingNeededLoad)
                 {
-                    // if the 
+                    
                     if (accumulatedPMin + powerplant.PMin <= neededLoad)
                     {
                         var deltaPmin =  powerplant.PMin - remainingNeededLoad;

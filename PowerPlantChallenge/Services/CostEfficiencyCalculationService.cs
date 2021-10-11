@@ -15,8 +15,6 @@ namespace PowerPlantChallenge.Services
         /// <returns></returns>
         public List<PowerProduction> CalculatePowerProduction(List<Powerplant> powerplants, double neededLoad)
         {
-            throw new ArgumentNullException();
-
             List<PowerProduction> powerProductions = new();            
             var remainingNeededLoad = neededLoad;
             var accumulatedPMin = 0.0;

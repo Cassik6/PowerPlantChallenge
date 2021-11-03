@@ -135,7 +135,8 @@ contains the name of the power plant and how much power it has to generate.
 
 
 example
-```{
+```
+{
   "load": 480,
   "fuels":
   {

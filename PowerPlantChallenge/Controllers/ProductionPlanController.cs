@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using PowerPlantChallenge.Mapping;
 using PowerPlantChallenge.Models;
-using PowerPlantChallenge.Models.DTOs;
+using PowerPlantChallenge.Models.Dtos;
 using PowerPlantChallenge.Services;
 using System;
 using System.Collections.Generic;
@@ -24,13 +24,13 @@ namespace PowerPlantChallenge.Controllers
 
         [Route("/productionplan")]
         [HttpPost]
-        public ActionResult<List<PowerProduction>> ProductionPlan([FromBody] PayloadDTO dtoPayload)
+        public ActionResult<List<PowerProduction>> ProductionPlan([FromBody] PayloadDto dtoPayload)
         {
             try
             {
-                var payload = DTOToPayLoad.Map(dtoPayload);
+                var payload = PayloadDtoConvertor.Map(dtoPayload);
             
-                return costEfficiencyCalculationService.CalculatePowerProduction(payload.Powerplants, payload.NeededLoad);
+                return costEfficiencyCalculationService.CalculatePowerProduction(payload.PowerPlants, payload.NeededLoad);
             }
             catch (ValidationException exception)
             {

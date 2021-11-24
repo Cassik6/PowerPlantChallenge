@@ -34,13 +34,13 @@ namespace PowerPlantChallenge.Controllers
             }
             catch (ValidationException exception)
             {
-                logger.LogError(exception, exception.Message, exception.ValidationResult);
+                logger.LogError("{message}", exception.Message);
                 return BadRequest(exception.Message);
                
             }
             catch(Exception exception)
             {
-                logger.LogError(exception, exception.Message);
+                logger.LogError("{message}", exception.Message);
                 return StatusCode(501);
             }
 

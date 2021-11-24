@@ -8,7 +8,7 @@ using Xunit;
 
 namespace PowerPlantChallenge.Tests.Models
 {
-    public class PowerplantShould
+    public class PowerPlantShould
     {
         
     }

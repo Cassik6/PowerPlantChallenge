@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PowerPlantChallenge.Models.DTOs
+namespace PowerPlantChallenge.Models.Dtos
 {
-    public class PowerplantDTO 
+    public class PowerPlantDto 
     {
         
         public string Name { get; set; }        

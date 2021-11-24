@@ -10,16 +10,16 @@ namespace PowerPlantChallenge.Models
     public class PowerProduction
     {
         [JsonPropertyName("name")]
-        public string PowerplantName { get; set; }
+        public string PowerPlantName { get; set; }
         [JsonPropertyName("p")]
         public double PowerGenerated { get; set; }
 
         [JsonIgnore]
         public double CostPerUnit { get; set; }
 
-        public PowerProduction(string powerplantName, double powerGenerated, double costPerUnit)
+        public PowerProduction(string powerPlantName, double powerGenerated, double costPerUnit)
         {
-            PowerplantName = powerplantName;
+            PowerPlantName = powerPlantName;
             PowerGenerated = powerGenerated;
             CostPerUnit = costPerUnit;
         }

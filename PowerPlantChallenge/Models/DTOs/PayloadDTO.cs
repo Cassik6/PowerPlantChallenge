@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace PowerPlantChallenge.Models.DTOs
+namespace PowerPlantChallenge.Models.Dtos
 {
-    public class PayloadDTO
+    public class PayloadDto
     {
-
-        
         public double Load { get; set; }
-        
-        public FuelPricesDTO Fuels { get; set; }
-        
-        public List<PowerplantDTO> Powerplants { get; set; }
+
+        public FuelPricesDto Fuels { get; set; }
+
+        public List<PowerPlantDto> PowerPlants { get; set; }
 
     }
 }

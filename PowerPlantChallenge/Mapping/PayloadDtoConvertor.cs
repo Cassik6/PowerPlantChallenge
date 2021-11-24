@@ -1,5 +1,5 @@
 ﻿using PowerPlantChallenge.Models;
-using PowerPlantChallenge.Models.DTOs;
+using PowerPlantChallenge.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace PowerPlantChallenge.Mapping
 {
-    public class DTOToPayLoad
+    public class PayloadDtoConvertor
     {
-        public static Payload Map(PayloadDTO dto)
+        public static Payload Map(PayloadDto dto)
         {
             var payload = new Payload
             {
-                FuelPrices = DTOToFuelPrices.Map(dto.Fuels),
+                FuelPrices = FuelPricesDtoConvertor.Map(dto.Fuels),
                 NeededLoad = dto.Load,
-                Powerplants = dto.Powerplants.Select(pow => DTOToPowerPlant.Map(pow)).ToList()
+                PowerPlants = dto.PowerPlants.Select(pow => PowerPlantDtoConvertor.Map(pow)).ToList()
             };      
 
-            payload.UpdatePowerplantsData();
+            payload.UpdatePowerPlantsData();
 
             return payload;
         }

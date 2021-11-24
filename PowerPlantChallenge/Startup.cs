@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PowerPlantChallenge.Middleware;
 using PowerPlantChallenge.Services;
 using System;
 using System.Collections.Generic;
@@ -61,32 +62,20 @@ namespace PowerPlantChallenge
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PowerPlantChallenge v1"));
             }
 
-            //app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseWebSockets();
+
+            app.UseMiddleware<WebsocketMiddleWare>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            app.UseWebSockets();
 
-            app.Use(async (context, next) =>
-            {
-                if (context.WebSockets.IsWebSocketRequest)
-                {
-                    WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                }
-                else
-                {
-                    await next();
-                }
-            });
-
-            
         }
     }
 }

@@ -5,6 +5,6 @@ namespace PowerPlantChallenge.Services
 {
     public interface ICostEfficiencyCalculationService
     {
-        List<PowerProduction> CalculatePowerProduction(List<Powerplant> powerplants, double neededLoad);
+        List<PowerProduction> CalculatePowerProduction(List<PowerPlant> powerPlants, double neededLoad);
     }
 }

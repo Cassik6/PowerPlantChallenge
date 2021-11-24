@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace PowerPlantChallenge.Models.DTOs
+namespace PowerPlantChallenge.Models.Dtos
 {
-    public class FuelPricesDTO
+    public class FuelPricesDto
     {
         [JsonPropertyName("gas(euro/MWh)")]
         public double Gas { get; set; }

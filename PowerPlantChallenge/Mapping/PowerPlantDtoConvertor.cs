@@ -1,5 +1,5 @@
 ﻿using PowerPlantChallenge.Models;
-using PowerPlantChallenge.Models.DTOs;
+using PowerPlantChallenge.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace PowerPlantChallenge.Mapping
 {
-    public class DTOToPowerPlant
+    public class PowerPlantDtoConvertor
     {
-        public static Powerplant Map(PowerplantDTO dto)
+        public static PowerPlant Map(PowerPlantDto dto)
         {
-            return new Powerplant
+            return new PowerPlant
             {
                 Efficiency = dto.Efficiency,
                 Name = dto.Name,
                 PMax = dto.PMax,
                 PMin = dto.PMin,
-                Type = (PowerplantType) Enum.Parse(typeof(PowerplantType), dto.Type, true)
+                Type = (PowerPlantType) Enum.Parse(typeof(PowerPlantType), dto.Type, true)
             };
         }
     }

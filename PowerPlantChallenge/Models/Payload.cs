@@ -13,12 +13,12 @@ namespace PowerPlantChallenge.Models
         
         public double NeededLoad { get; set; }
         public FuelPrices FuelPrices { get; set; }
-        public List<Powerplant> Powerplants { get; set; }
+        public List<PowerPlant> PowerPlants { get; set; }
 
-        public void UpdatePowerplantsData()
+        public void UpdatePowerPlantsData()
         {
-            Powerplants = Powerplants.Select(
-                powerplant => Powerplant.Create(FuelPrices, powerplant.Name, powerplant.Type, powerplant.Efficiency, powerplant.PMax, powerplant.PMin)
+            PowerPlants = PowerPlants.Select(
+                powerPlant => PowerPlant.Create(FuelPrices, powerPlant.Name, powerPlant.Type, powerPlant.Efficiency, powerPlant.PMax, powerPlant.PMin)
                 ).ToList();
         }
     }

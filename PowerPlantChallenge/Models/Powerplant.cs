@@ -6,19 +6,19 @@ using System.Text.Json.Serialization;
 namespace PowerPlantChallenge.Models
 {
 
-    public class Powerplant
+    public class PowerPlant
     {
         public string Name { get; set; }
-        public PowerplantType Type { get; set; }
+        public PowerPlantType Type { get; set; }
         public double Efficiency { get; set; }
         public double PMax { get; set; }
         public double EffectivePMax { get; set; }
         public double PMin { get; set; }
         public double CostPerUnit { get; set; }
 
-        public static Powerplant Create(FuelPrices fuelPrice, string name, PowerplantType type, double efficiency, double pMax, double pMin)
+        public static PowerPlant Create(FuelPrices fuelPrice, string name, PowerPlantType type, double efficiency, double pMax, double pMin)
         {
-            var powerplant = new Powerplant
+            var powerPlant = new PowerPlant
             {
                 Efficiency = efficiency,
                 Name = name,
@@ -28,27 +28,27 @@ namespace PowerPlantChallenge.Models
                 EffectivePMax = CalculateEffectivePMax(fuelPrice.Wind, pMax, type)
             };
 
-            if (powerplant.Type == PowerplantType.Windturbine) 
-                powerplant.PMin = powerplant.EffectivePMax;
+            if (powerPlant.Type == PowerPlantType.Windturbine) 
+                powerPlant.PMin = powerPlant.EffectivePMax;
 
-            powerplant.CostPerUnit = type switch
+            powerPlant.CostPerUnit = type switch
             {
-                PowerplantType.Gasfired => CalculatePowerCostGasFired(fuelPrice, efficiency),
-                PowerplantType.Turbojet => CalculatePowerCostTurboJet(fuelPrice, efficiency),
-                PowerplantType.Windturbine => 0,
+                PowerPlantType.Gasfired => CalculatePowerCostGasFired(fuelPrice, efficiency),
+                PowerPlantType.Turbojet => CalculatePowerCostTurboJet(fuelPrice, efficiency),
+                PowerPlantType.Windturbine => 0,
                 _ => throw new System.ArgumentNullException("Powerplant Type is not set on this object"),
             };
-            return powerplant;
+            return powerPlant;
         }
 
-        private static double CalculateEffectivePMax(double windStrenght, double pMax, PowerplantType type)
+        private static double CalculateEffectivePMax(double windStrenght, double pMax, PowerPlantType type)
         {
-            return Math.Round(type == PowerplantType.Windturbine ? windStrenght * pMax / 100 : pMax, 1);
+            return Math.Round(type == PowerPlantType.Windturbine ? windStrenght * pMax / 100 : pMax, 1);
         }
 
         private static double CalculatePowerCostGasFired(FuelPrices fuelPrice, double efficiency)
         {
-            return fuelPrice.Gas / efficiency + 0.3 * fuelPrice.CO2;
+            return fuelPrice.Gas / efficiency + 0.3 * fuelPrice.Co2;
             
         }
 

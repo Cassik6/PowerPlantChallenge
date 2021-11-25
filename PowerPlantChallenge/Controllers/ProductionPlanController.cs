@@ -22,7 +22,7 @@ namespace PowerPlantChallenge.Controllers
             this.logger = logger;
         }
 
-        [Route("/productionplan")]
+        [Route("/productionPlan")]
         [HttpPost]
         public ActionResult<List<PowerProduction>> ProductionPlan([FromBody] PayloadDto dtoPayload)
         {
@@ -34,13 +34,13 @@ namespace PowerPlantChallenge.Controllers
             }
             catch (ValidationException exception)
             {
-                logger.LogError("{message}", exception.Message);
+                logger.LogError("{Message}", exception.Message);
                 return BadRequest(exception.Message);
                
             }
             catch(Exception exception)
             {
-                logger.LogError("{message}", exception.Message);
+                logger.LogError("{M essage}", exception.Message);
                 return StatusCode(501);
             }
 

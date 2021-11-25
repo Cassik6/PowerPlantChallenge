@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlantChallenge.Mapping
 {
-    public class PowerPlantDtoConvertor
+    public static class PowerPlantDtoConvertor
     {
         public static PowerPlant Map(PowerPlantDto dto)
         {

@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 
 namespace PowerPlantChallenge.Models
 {
-
     public class PowerPlant
     {
         public string Name { get; set; }
@@ -36,14 +35,28 @@ namespace PowerPlantChallenge.Models
                 PowerPlantType.Gasfired => CalculatePowerCostGasFired(fuelPrice, efficiency),
                 PowerPlantType.Turbojet => CalculatePowerCostTurboJet(fuelPrice, efficiency),
                 PowerPlantType.Windturbine => 0,
-                _ => throw new System.ArgumentNullException("Powerplant Type is not set on this object"),
+                _ => throw new ArgumentNullException("¨PowerPlantType", "Powerplant Type is not set on this object"),
             };
             return powerPlant;
         }
 
-        private static double CalculateEffectivePMax(double windStrenght, double pMax, PowerPlantType type)
+        public static PowerPlant Clone(PowerPlant powerPlant)
         {
-            return Math.Round(type == PowerPlantType.Windturbine ? windStrenght * pMax / 100 : pMax, 1);
+            return new PowerPlant
+            {
+                CostPerUnit = powerPlant.CostPerUnit,
+                EffectivePMax = powerPlant.EffectivePMax,
+                Efficiency = powerPlant.Efficiency,
+                Name = powerPlant.Name,
+                PMax = powerPlant.PMax,
+                PMin = powerPlant.PMin,
+                Type = powerPlant.Type
+            };
+        }
+
+        private static double CalculateEffectivePMax(double windStrength, double pMax, PowerPlantType type)
+        {
+            return Math.Round(type == PowerPlantType.Windturbine ? windStrength * pMax / 100 : pMax, 1);
         }
 
         private static double CalculatePowerCostGasFired(FuelPrices fuelPrice, double efficiency)

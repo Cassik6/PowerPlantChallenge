@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace PowerPlantChallenge.Mapping
 {
-    public class FuelPricesDtoConvertor
+    public static class FuelPricesDtoConvertor
     {
         public static FuelPrices Map(FuelPricesDto dto)
         {
             return new FuelPrices
             {
-                Co2 = dto.CO2,
+                Co2 = dto.Co2,
                 Gas = dto.Gas,
                 Kerosine = dto.Kerosine,
                 Wind = dto.Wind

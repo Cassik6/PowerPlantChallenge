@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
-using PowerPlantChallenge.Models;
+﻿using PowerPlantChallenge.Models;
 using PowerPlantChallenge.Services;
+using System.Collections.Generic;
 using Xunit;
 
 namespace PowerPlantChallenge.Tests.Services
 {
     public class CostEfficiencyServiceShould
     {
+
+        CostEfficiencyCalculationService calculationService; 
+        public CostEfficiencyServiceShould()
+        {
+            calculationService = new CostEfficiencyCalculationService();
+        }
+
         [Fact]
         public void SkipWindTurbineIfNecessary()
         {
 
-            var powerPlants = new List<PowerPlant>()
+            var powerPlants = new List<PowerPlant>
                 {
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "GasFiredEco",
@@ -28,7 +30,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 50,
                         EffectivePMax = 90
                     },
-                    new PowerPlant()
+                    new ()
                     {
                          Efficiency = 0.9,
                         Name = "GasFiredEco2",
@@ -38,7 +40,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 500,
                         EffectivePMax = 10
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "WindPark",
@@ -48,7 +50,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 0,
                         EffectivePMax = 20
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "GasFiredToxic",
@@ -60,9 +62,7 @@ namespace PowerPlantChallenge.Tests.Services
                     }
                 };
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 100);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 100);
 
             Assert.Equal("GasFiredEco", result[0].PowerPlantName);
             Assert.Equal("GasFiredEco2", result[1].PowerPlantName);
@@ -73,9 +73,9 @@ namespace PowerPlantChallenge.Tests.Services
         public void TakeMostEfficient()
         {
 
-            var powerPlants = new List<PowerPlant>()
+            var powerPlants = new List<PowerPlant>
                 {
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "GasFiredEco",
@@ -85,7 +85,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 50,
                         EffectivePMax = 50
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 0.9,
                         Name = "GasFiredEco2",
@@ -95,7 +95,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 500,
                         EffectivePMax = 10
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "WindPark",
@@ -105,7 +105,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 0,
                         EffectivePMax = 20
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "GasFiredToxic",
@@ -117,9 +117,7 @@ namespace PowerPlantChallenge.Tests.Services
                     }
                 };
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 100);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 100);
 
             Assert.Equal("WindPark", result[0].PowerPlantName);
             Assert.Equal("GasFiredEco", result[1].PowerPlantName);
@@ -133,10 +131,9 @@ namespace PowerPlantChallenge.Tests.Services
         [Fact]
         public void NotAlwayUseMaxProductionCapcity()
         {
-
-            var powerPlants = new List<PowerPlant>()
+            var powerPlants = new List<PowerPlant>
                 {
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "GasFiredEco",
@@ -146,7 +143,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 50,
                         EffectivePMax = 45
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 0.9,
                         Name = "GasFiredEco2",
@@ -156,7 +153,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 500,
                         EffectivePMax = 45
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "GasFiredEco3",
@@ -166,7 +163,7 @@ namespace PowerPlantChallenge.Tests.Services
                         CostPerUnit = 5000,
                         EffectivePMax = 20
                     },
-                    new PowerPlant()
+                    new ()
                     {
                         Efficiency = 1,
                         Name = "GasFiredToxic",
@@ -178,18 +175,14 @@ namespace PowerPlantChallenge.Tests.Services
                     }
                 };
 
-            CostEfficiencyCalculationService service = new();
+            var result = calculationService.CalculatePowerProduction(powerPlants, 100);
 
-            var result = service.CalculatePowerProduction(powerPlants, 100);
-
-            
             Assert.Equal("GasFiredEco", result[0].PowerPlantName);
             Assert.Equal("GasFiredEco2", result[1].PowerPlantName);
             Assert.Equal("GasFiredEco3", result[2].PowerPlantName);
             Assert.Equal(40, result[0].PowerGenerated);
             Assert.Equal(40, result[1].PowerGenerated);
             Assert.Equal(20, result[2].PowerGenerated);
-            
         }
         [Fact]
         public void ReturnNullIfNotEnoughEnergyCanBeProduced()
@@ -212,14 +205,10 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 50)
 
         };
-            
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 500);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 500);
 
             Assert.Null(result);
-
         }
         [Fact]
         public void ReturnNullIfTooMuchEnergyIsProduced()
@@ -244,10 +233,7 @@ namespace PowerPlantChallenge.Tests.Services
 
         };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 20);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 20);
 
             Assert.Null(result);
         }
@@ -273,10 +259,7 @@ namespace PowerPlantChallenge.Tests.Services
 
         };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 25);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 25);
 
             Assert.Equal("Wind1", result[0].PowerPlantName);
             Assert.Equal(25, result[0].PowerGenerated);
@@ -303,13 +286,10 @@ namespace PowerPlantChallenge.Tests.Services
 
         };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 50);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 50);
 
             Assert.Equal("Wind1", result[0].PowerPlantName);
-            Assert.Equal(25, result[0].PowerGenerated); 
+            Assert.Equal(25, result[0].PowerGenerated);
             Assert.Equal("Gas1", result[1].PowerPlantName);
             Assert.Equal(25, result[1].PowerGenerated);
         }
@@ -335,10 +315,7 @@ namespace PowerPlantChallenge.Tests.Services
 
         };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 20);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 20);
 
             Assert.Equal("Gas1", result[0].PowerPlantName);
             Assert.Equal(20, result[0].PowerGenerated);
@@ -385,14 +362,11 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 10)
             };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 20);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 20);
 
             Assert.Equal("Gas3", result[0].PowerPlantName);
             Assert.Equal(20, result[0].PowerGenerated);
-            
+
         }
         [Fact]
         public void ConsumeEveryGas()
@@ -436,10 +410,7 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 10)
             };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 490);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 490);
 
             Assert.Equal("Gas3", result[0].PowerPlantName);
             Assert.Equal(100, result[0].PowerGenerated);
@@ -479,19 +450,15 @@ namespace PowerPlantChallenge.Tests.Services
                 efficiency: 1,
                 pMax: 50,
                 pMin: 0),
-                
+
             };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 125);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 125);
 
             Assert.Equal("Wind1", result[0].PowerPlantName);
             Assert.Equal(25, result[0].PowerGenerated);
             Assert.Equal("Gas2", result[1].PowerPlantName);
             Assert.Equal(100, result[1].PowerGenerated);
-
         }
         [Fact]
         public void UseKerosine()
@@ -522,16 +489,12 @@ namespace PowerPlantChallenge.Tests.Services
 
             };
 
-
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 100);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 100);
 
             Assert.Equal("Wind1", result[0].PowerPlantName);
-            Assert.Equal(75, result[0].PowerGenerated); 
+            Assert.Equal(75, result[0].PowerGenerated);
             Assert.Equal("Kerosine1", result[1].PowerPlantName);
             Assert.Equal(25, result[1].PowerGenerated);
-
         }
         [Fact]
         public void PassTrickyTest1()
@@ -564,9 +527,7 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 0),
             };
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 60);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 60);
 
             Assert.Equal("gasfired", result[0].PowerPlantName);
             Assert.Equal(60, result[0].PowerGenerated);
@@ -602,9 +563,7 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 0),
             };
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 80);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 80);
 
             Assert.Equal("gasfired", result[0].PowerPlantName);
             Assert.Equal(80, result[0].PowerGenerated);
@@ -664,9 +623,7 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 0),
             };
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 480);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 480);
 
             Assert.Equal("windpark1", result[0].PowerPlantName);
             Assert.Equal(90, result[0].PowerGenerated);
@@ -730,9 +687,7 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 0),
             };
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 480);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 480);
 
             Assert.Equal("gasfiredbig1", result[0].PowerPlantName);
             Assert.Equal(380, result[0].PowerGenerated);
@@ -794,9 +749,7 @@ namespace PowerPlantChallenge.Tests.Services
                 pMin: 0),
             };
 
-            CostEfficiencyCalculationService service = new();
-
-            var result = service.CalculatePowerProduction(powerPlants, 910);
+            var result = calculationService.CalculatePowerProduction(powerPlants, 910);
 
             Assert.Equal("windpark1", result[0].PowerPlantName);
             Assert.Equal(90, result[0].PowerGenerated);

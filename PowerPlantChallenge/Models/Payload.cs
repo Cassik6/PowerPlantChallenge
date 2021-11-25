@@ -10,7 +10,6 @@ namespace PowerPlantChallenge.Models
     [DataContract]
     public class Payload
     {
-        
         public double NeededLoad { get; set; }
         public FuelPrices FuelPrices { get; set; }
         public List<PowerPlant> PowerPlants { get; set; }

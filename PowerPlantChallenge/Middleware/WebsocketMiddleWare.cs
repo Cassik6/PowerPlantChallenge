@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,8 +14,8 @@ namespace PowerPlantChallenge.Middleware
 
         public WebsocketMiddleWare(RequestDelegate next, ILogger<WebsocketMiddleWare> logger)
         {
-            this._next = next;
-            this._logger = logger;
+            _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -30,24 +28,19 @@ namespace PowerPlantChallenge.Middleware
                     _logger.LogWarning("Echo has been received!!");
 
                     await Echo(context, webSocket);
-
                 }
-                
             }
             else
             {
                 await _next(context);
             }
-              
-            
-
         }
 
 
-        private async Task Echo(HttpContext context, WebSocket webSocket)
+        private static async Task Echo(HttpContext context, WebSocket webSocket)
         {
             var buffer = new byte[1024 * 4];
-            WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             while (!result.CloseStatus.HasValue)
             {
                 await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, CancellationToken.None);

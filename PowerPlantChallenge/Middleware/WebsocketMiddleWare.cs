@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using PowerPlantChallenge.Services;
 using System;
+using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,12 +12,12 @@ namespace PowerPlantChallenge.Middleware
     public class WebsocketMiddleWare
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<WebsocketMiddleWare> _logger;
+        private readonly IWebSocketService _webSocketService;
 
-        public WebsocketMiddleWare(RequestDelegate next, ILogger<WebsocketMiddleWare> logger)
+        public WebsocketMiddleWare(RequestDelegate next, IWebSocketService webSocketService)
         {
             _next = next;
-            _logger = logger;
+            this._webSocketService = webSocketService;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -25,9 +27,8 @@ namespace PowerPlantChallenge.Middleware
                 if (context.WebSockets.IsWebSocketRequest)
                 {
                     WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                    _logger.LogWarning("Echo has been received!!");
-
-                    await Echo(context, webSocket);
+                    _webSocketService.AddWebSocket(webSocket);
+                    await KeepOpen(webSocket);
                 }
             }
             else
@@ -37,16 +38,9 @@ namespace PowerPlantChallenge.Middleware
         }
 
 
-        private static async Task Echo(HttpContext context, WebSocket webSocket)
-        {
-            var buffer = new byte[1024 * 4];
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            while (!result.CloseStatus.HasValue)
-            {
-                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, CancellationToken.None);
-
-                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            }
+        private static async Task KeepOpen(WebSocket webSocket)
+        {            
+            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(new byte[1024 * 4]), CancellationToken.None);
             await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
         }
     }

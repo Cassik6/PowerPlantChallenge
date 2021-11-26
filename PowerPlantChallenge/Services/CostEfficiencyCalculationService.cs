@@ -133,7 +133,7 @@ namespace PowerPlantChallenge.Services
         /// <param name="powerProds1"></param>
         /// <param name="powerProds2"></param>
         /// <returns></returns>
-        private List<PowerProduction> ComparePowerProductions(List<PowerProduction> powerProds1, List<PowerProduction> powerProds2)
+        private static List<PowerProduction> ComparePowerProductions(List<PowerProduction> powerProds1, List<PowerProduction> powerProds2)
         {
             if (powerProds1 == null)
                 return powerProds2;

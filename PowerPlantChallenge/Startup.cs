@@ -38,6 +38,7 @@ namespace PowerPlantChallenge
                     s.RegisterValidatorsFromAssemblyContaining<Startup>();
                 });
             services.AddTransient<ICostEfficiencyCalculationService, CostEfficiencyCalculationService>();
+            services.AddTransient<IWebSocketService, WebSocketService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PowerPlantChallenge", Version = "v1" });

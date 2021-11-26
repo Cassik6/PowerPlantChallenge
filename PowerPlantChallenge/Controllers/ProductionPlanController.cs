@@ -40,7 +40,7 @@ namespace PowerPlantChallenge.Controllers
             }
             catch(Exception exception)
             {
-                logger.LogError("{M essage}", exception.Message);
+                logger.LogError("{Message}", exception.Message);
                 return StatusCode(501);
             }
 
